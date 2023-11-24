@@ -1,5 +1,8 @@
 <h1>Activité pratique 3</h1>
-<h2>Development Web JEE Spring MVC</h2>
+<h3>Introduction</h3>
+<p>Ce rapport détaille le développement d'applications Web sécurisées à l'aide de Spring Boot et Spring Security, en mettant l'accent sur la gestion des patients. Le processus comprend la création d'un projet avec les dépendances requises, la mise en œuvre d'entités JPA pour les patients, la configuration de la persistance des données, la configuration des contrôleurs Spring MVC et la création de vues Thymeleaf. La flexibilité de se connecter à H2 ou MySQL est une caractéristique clé du projet. L'intégration de Spring Security avec trois stratégies d'authentification améliore la sécurité : InMemoryAuthentication, JdbcAuthentication et UserDetailsService. L'objectif final est de fournir une application Web entièrement fonctionnelle, adaptable et sécurisée qui utilise judicieusement les fonctionnalités fournies par Spring Boot et Spring Security.
+</p>
+
 <h3>Objectifs</h3>
 <p>Créer une application web JEE qui permet de gérer des patients</p>
 <ol>
@@ -68,5 +71,16 @@ et les roles qui seront ajoutés à la base de données.</p>
 <img src="captures/jdbcUserDetailsManager.png">
 <p>Dans la classe HopitalWebApplication :</p>
 <img src="captures/jdbc_CLR.png"/>
-<li></li>
+<li><h3>UserDetailsService dans SecurityConfig</h3></li>
+<p>Cette interface permet de récupérer les détails de l'utilisateur à partir de n'importe quelle source de données personnalisée telle qu'une base de données NoSQL, un service Web.</p>
 </ol>
+</br>
+<p>Gestion des autorisations d'accès
+Cette section cruciale de notre application se focalise sur la gestion minutieuse des droits d'accès, jouant un rôle essentiel dans la sécurité globale. Grâce à l'utilisation avisée de Spring Security, notre configuration permet une gestion précise des autorisations en définissant des règles spécifiques pour accéder à des ressources telles que les Webjars et la console H2. La classe SecurityConfig offre une flexibilité notable en permettant la définition de règles basées sur les rôles des utilisateurs, facilitée par les méthodes hasRole("USER") et hasRole("ADMIN").
+
+Personnalisation du processus de connexion avec "httpSecurity.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll();"
+
+httpSecurity.formLogin(): Active la gestion du processus de connexion fourni par Spring Security.
+.loginPage("/login"): Spécifie la page de connexion personnalisée. Au lieu d'utiliser la page de connexion par défaut fournie par Spring Security, l'application redirigera les utilisateurs vers la page spécifiée ("/login") lorsqu'une authentification est requise.
+.defaultSuccessUrl("/"): Définit l'URL par défaut vers laquelle un utilisateur est redirigé après une connexion réussie. Dans ce cas, l'utilisateur est redirigé vers la page principale ("/").
+.permitAll(): Autorise l'accès à la page de connexion spécifiée par n'importe quel utilisateur, même s'il n'est pas authentifié. Cela garantit que la page de connexion est accessible à tous, même à ceux qui ne sont pas encore connectés.</p>
