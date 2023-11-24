@@ -4,6 +4,8 @@
 </p>
 
 <h3>Objectifs</h3>
+<h3>Introduction</h3>
+<p></p>
 <p>Créer une application web JEE qui permet de gérer des patients</p>
 <ol>
 <li>Créer un projet spring boot avec les dépendances Web, Spring Data JPA, H2,
