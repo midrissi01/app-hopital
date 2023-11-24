@@ -4,6 +4,8 @@
 </p>
 
 <h3>Objectifs</h3>
+<h3>Introduction</h3>
+<p></p>
 <p>Créer une application web JEE qui permet de gérer des patients</p>
 <ol>
 <li>Créer un projet spring boot avec les dépendances Web, Spring Data JPA, H2,
@@ -72,15 +74,62 @@ et les roles qui seront ajoutés à la base de données.</p>
 <p>Dans la classe HopitalWebApplication :</p>
 <img src="captures/jdbc_CLR.png"/>
 <li><h3>UserDetailsService dans SecurityConfig</h3></li>
+
 <p>Cette interface permet de récupérer les détails de l'utilisateur à partir de n'importe quelle source de données personnalisée telle qu'une base de données NoSQL, un service Web.</p>
 </ol>
-</br>
-<p>Gestion des autorisations d'accès
-Cette section cruciale de notre application se focalise sur la gestion minutieuse des droits d'accès, jouant un rôle essentiel dans la sécurité globale. Grâce à l'utilisation avisée de Spring Security, notre configuration permet une gestion précise des autorisations en définissant des règles spécifiques pour accéder à des ressources telles que les Webjars et la console H2. La classe SecurityConfig offre une flexibilité notable en permettant la définition de règles basées sur les rôles des utilisateurs, facilitée par les méthodes hasRole("USER") et hasRole("ADMIN").
 
+<p><h4>Gestion des autorisations d'accès</h4>
+Cette section cruciale de notre application se focalise sur la gestion minutieuse des droits d'accès, jouant un rôle essentiel dans la sécurité globale. Grâce à l'utilisation avisée de Spring Security, notre configuration permet une gestion précise des autorisations en définissant des règles spécifiques pour accéder à des ressources telles que les Webjars et la console H2. La classe SecurityConfig offre une flexibilité notable en permettant la définition de règles basées sur les rôles des utilisateurs, facilitée par les méthodes hasRole("USER") et hasRole("ADMIN").
 Personnalisation du processus de connexion avec "httpSecurity.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll();"
 
 httpSecurity.formLogin(): Active la gestion du processus de connexion fourni par Spring Security.
 .loginPage("/login"): Spécifie la page de connexion personnalisée. Au lieu d'utiliser la page de connexion par défaut fournie par Spring Security, l'application redirigera les utilisateurs vers la page spécifiée ("/login") lorsqu'une authentification est requise.
 .defaultSuccessUrl("/"): Définit l'URL par défaut vers laquelle un utilisateur est redirigé après une connexion réussie. Dans ce cas, l'utilisateur est redirigé vers la page principale ("/").
 .permitAll(): Autorise l'accès à la page de connexion spécifiée par n'importe quel utilisateur, même s'il n'est pas authentifié. Cela garantit que la page de connexion est accessible à tous, même à ceux qui ne sont pas encore connectés.</p>
+
+<img src="captures/imageredme2.PNG">
+<img src="captures/imageredme.PNG">
+
+
+<h2>AccountServiceImpl </h2>
+
+<p>
+    Cette classe implémente l'interface AccountService et fournit des méthodes pour la gestion des utilisateurs et des rôles.
+</p>
+
+<ul>
+    <li><strong>addnewUser(String username, String password, String email, String confirmPassword):</strong> Ajoute un nouvel utilisateur au système. Vérifie si l'utilisateur existe déjà, valide le mot de passe, puis enregistre l'utilisateur dans le référentiel.</li>
+    <li><strong>addnewRole(String role):</strong> Ajoute un nouveau rôle au système. Vérifie si le rôle existe déjà, puis enregistre le rôle dans le référentiel.</li>
+    <li><strong>addRoleToUser(String username, String role):</strong> Ajoute un rôle à un utilisateur. Récupère l'utilisateur et le rôle du référentiel et associe le rôle à l'utilisateur.</li>
+    <li><strong>removeRoleFromUser(String username, String role):</strong> Supprime un rôle d'un utilisateur. Récupère l'utilisateur et le rôle du référentiel et dissocie le rôle de l'utilisateur.</li>
+    <li><strong>loadUserByUsername(String username):</strong> Charge un utilisateur par son nom d'utilisateur depuis le référentiel.</li>
+</ul>
+
+<h2>UserDetailServiceImpl </h2>
+<p>
+    Cette classe implémente l'interface Spring Security UserDetailsService et est responsable du chargement des détails de l'utilisateur pour l'authentification.
+</p>
+
+<ul>
+    <li><strong>loadUserByUsername(String username):</strong> Charge les détails de l'utilisateur par son nom d'utilisateur. Récupère l'utilisateur du AccountService, convertit les détails de l'utilisateur, y compris les rôles, et renvoie un objet UserDetails.</li>
+</ul>
+<img src="captures/userdetailaccountservice.PNG">
+
+<h2>AccountService </h2>
+<p>
+    Il s'agit d'une interface définissant des méthodes pour la gestion des utilisateurs et des rôles.
+</p>
+<img src="captures/imageredme1.PNG">
+<ul>
+    <li><strong>addnewUser(String username, String password, String email, String confirmPassword):</strong> Ajoute un nouvel utilisateur.</li>
+    <li><strong>addnewRole(String role):</strong> Ajoute un nouveau rôle.</li>
+    <li><strong>addRoleToUser(String username, String role):</strong> Ajoute un rôle à un utilisateur.</li>
+    <li><strong>removeRoleFromUser(String username, String role):</strong> Supprime un rôle d'un utilisateur.</li>
+    <li><strong>loadUserByUsername(String username):</strong> Charge un utilisateur par son nom d'utilisateur.</li>
+</ul>
+
+
+<h3>Conclusion</h3>
+<p>
+En conclusion, cette activité pratique 3 a permis de développer une application web sécurisée axée sur la gestion des patients en utilisant les frameworks Spring Boot et Spring Security. Le rapport détaille chaque étape du processus, depuis la création du projet jusqu'à l'intégration de fonctionnalités avancées telles que la pagination des patients, la suppression, et la validation des formulaires.
+</p>
